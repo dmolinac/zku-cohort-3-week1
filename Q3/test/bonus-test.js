@@ -35,19 +35,24 @@ describe("SystemOfEquations", function () {
 
     it("Should return true for correct proof", async function () {
         //[assignment] Add comments to explain what each line is doing
+        //const { proof, publicSignals } = await groth16.fullProve({
+        //    "x": ["15","17","19"],
+        //    "A": [["1","1","1"],["1","2","3"],["2","-1","1"]],
+        //    "b": ["51", "106", "32"]
+        //},
         const { proof, publicSignals } = await groth16.fullProve({
-            "x": ["15","17","19"],
-            "A": [["1","1","1"],["1","2","3"],["2","-1","1"]],
-            "b": ["51", "106", "32"]
+            "x": ["2","3","4"],
+            "A": [["1","1","1"],["1","1","1"],["1","1","1"]],
+            "b": ["9", "9", "9"]
         },
             "contracts/bonus/SystemOfEquations/SystemOfEquations_js/SystemOfEquations.wasm","contracts/bonus/SystemOfEquations/circuit_final.zkey");
 
         const editedPublicSignals = unstringifyBigInts(publicSignals);
         const editedProof = unstringifyBigInts(proof);
         const calldata = await groth16.exportSolidityCallData(editedProof, editedPublicSignals);
-    
+
         const argv = calldata.replace(/["[\]\s]/g, "").split(',').map(x => BigInt(x).toString());
-    
+
         const a = [argv[0], argv[1]];
         const b = [[argv[2], argv[3]], [argv[4], argv[5]]];
         const c = [argv[6], argv[7]];

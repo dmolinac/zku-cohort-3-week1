@@ -15,7 +15,7 @@ echo "Compiling SystemOfEquations.circom..."
 
 # compile circuit
 
-circom SystemOfEquations.circom --r1cs --wasm --sym -o SystemOfEquations
+circom SystemOfEquations.circom --verbose --r1cs --wasm --sym -o SystemOfEquations
 snarkjs r1cs info SystemOfEquations/SystemOfEquations.r1cs
 
 # Start a new zkey and make a contribution
